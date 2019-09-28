@@ -1,0 +1,26 @@
+CREATE TABLE unit(
+	unit_id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(40) NOT NULL,
+	parent_id INT
+);
+
+ALTER TABLE unit
+ADD FOREIGN KEY(parent_id) REFERENCES unit(parent_id) ON DELETE SET NULL;
+
+CREATE INDEX ix_parent
+ON unit(parent_id);
+
+CREATE TABLE position(
+	position_id INT PRIMARY KEY AUTO_INCREMENT
+	name VARCHAR(40) NOT NULL,
+	desription VARCHAR(100)
+);
+
+CREATE TABLE all_positions (
+	unit_id INT NOT NULL,
+	position_id INT NOT NULL,
+	total INT NOT NULL,
+	FOREIGN KEY(unit_id) REFERENCES unit(unit_id) ON DELETE CASCADE,
+	FOREIGN KEY(position_id) REFERENCES position(position_id) ON DELETE CASCADE,
+	PRIMARY KEY(unit_id, position_id)
+);
